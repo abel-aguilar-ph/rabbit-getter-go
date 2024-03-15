@@ -1,0 +1,23 @@
+package main
+
+import (
+	"fmt"
+	"log"
+	"os"
+	"strconv"
+
+	"github.com/abel-aguilar-ph/sre-go-rabbit/rabbit"
+)
+
+func main() {
+	if len(os.Args) != 3 {
+		log.Fatalln("Usage: [program] nameOfTheQueue numberOfMessages")
+	}
+
+	queueName := os.Args[1]
+	numberOfMessages, _ := strconv.Atoi(os.Args[2])
+	fmt.Println()
+	fmt.Printf("Name of the queue: %s, Number of messages: %d \n", queueName, numberOfMessages)
+	rabbit.GetMessagesFromQueue(queueName, numberOfMessages)
+
+}
