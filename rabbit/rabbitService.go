@@ -50,25 +50,32 @@ func ExtractExceptionMessage(messages []Message) ([]string, error) {
 
 func ShowExceptionMessages(excepMsgs []string, ids []string) {
 	var res = make(map[string]([]string))
-	for index, excepMsg := range excepMsgs {
-		value, ok := res[excepMsg] 
-		if ok {                    
-			res[excepMsg] = append(value, ids[index])
-		} else {
-			res[excepMsg] = []string{ids[index]}
+	if(len(excepMsgs)>0){
+		for index, excepMsg := range excepMsgs { 
+			value, ok := res[excepMsg] 
+			if ok {                    
+				res[excepMsg] = append(value, ids[index])
+			} else {
+				res[excepMsg] = []string{ids[index]}
+			}
 		}
-	}
-	fmt.Println()
-	fmt.Println("X-Exception-Messages:")
-	for key, value := range res {
-		fmt.Println(key)
-		fmt.Println("\t Payments with the error above (",len(value),"):")
-		for _, id := range value {
-			fmt.Println("\t",id)
+		fmt.Println("X-Exception-Messages:\n")
+		for key, value := range res {
+			var idsSameError []string
+			fmt.Println(key)
+			fmt.Println("\t Payments with the error above (",len(value),"):")
+			idsSameError = append(idsSameError,value...)
+			/*for _, id := range value {
+				idsSameError = append(idsSameError, id)
+			}*/
+			idsKibanaError,_ := KibanaOrQuery(idsSameError)
+			fmt.Println(idsKibanaError)
+			fmt.Println()
 		}
+	}else{
 		fmt.Println()
+		fmt.Println("x-excepcion-message field not found")
 	}
-
 }
 
 func ExtractPayhubIds(messagesJson []Message) ([]string, error) {
