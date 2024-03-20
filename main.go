@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/abel-aguilar-ph/sre-go-rabbit/rabbit"
+	"github.com/abel-aguilar-ph/rabbit-getter-go/rabbit"
 )
 
 func main() {
