@@ -30,8 +30,7 @@ Adicionalmente debemos de añadir las siguientes variables de entorno de forma n
 
 
 ## Como usarlo
-
-Ahora tenemos que compilar y crear el ejecutable (opcionalmente tras esto se puede eliminar todo el código fuente y dejar solo el binario compilado).
+Después de clonar o descargar el ZIP, tenemos que compilar y crear el ejecutable (opcionalmente tras esto se puede eliminar todo el código fuente y dejar solo el binario compilado).
 
 *Windows*
 
