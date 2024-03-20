@@ -18,6 +18,7 @@ func main() {
 	numberOfMessages, _ := strconv.Atoi(os.Args[2])
 	fmt.Println()
 	fmt.Printf("Name of the queue: %s, Number of messages: %d \n", queueName, numberOfMessages)
+	fmt.Println()
 	rabbit.GetMessagesFromQueue(queueName, numberOfMessages)
-
+	fmt.Println()
 }

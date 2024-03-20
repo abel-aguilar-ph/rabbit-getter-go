@@ -63,13 +63,13 @@ func ShowExceptionMessages(excepMsgs []string, ids []string) {
 		for key, value := range res {
 			var idsSameError []string
 			fmt.Println(key)
-			fmt.Println("\t Payments with the error above (",len(value),"):")
+			fmt.Println("\tPayments with the error above (",len(value),"):")
 			idsSameError = append(idsSameError,value...)
 			/*for _, id := range value {
 				idsSameError = append(idsSameError, id)
 			}*/
 			idsKibanaError,_ := KibanaOrQuery(idsSameError)
-			fmt.Println(idsKibanaError)
+			fmt.Println("\t\t",idsKibanaError)
 			fmt.Println()
 		}
 	}else{
@@ -95,7 +95,7 @@ func ExtractPayhubIds(messagesJson []Message) ([]string, error) {
 	}
 
 	if len(ids) == 0 {
-		return nil, fmt.Errorf("no se encontraron payhubIds")
+		return nil, fmt.Errorf("No se encontraron payhubIds")
 	}
 
 	return ids, nil
