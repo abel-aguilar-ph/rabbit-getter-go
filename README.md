@@ -34,15 +34,17 @@ Después de clonar o descargar el ZIP, tenemos que compilar y crear el ejecutabl
 
 *Windows*
 
+Si no se tiene permisos, se puede ejecutar desde la carpeta raíz del proyecto, sin necesidad de hacer el ejecutable.
+
+`go run main.go QueueName NumberMessages`
+
+
 Desde el PowerShell, estando en el directorio donde se encuentra main.go, ejecutamos lo siguiente.
 
 `$env:GOOS="windows"; $env:GOARCH="amd64"; go build -o RabbitGetter.exe`
 
 `./RabbitGetter.exe QueueName NumberMessages`
 
-Si no se tiene permisos, se puede ejecutar desde la carpeta raíz del proyecto.
-
-`go run main.go QueueName NumberMessages`
 
 
 *Mac*
