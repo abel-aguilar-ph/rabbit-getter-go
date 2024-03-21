@@ -40,6 +40,10 @@ Desde el PowerShell, estando en el directorio donde se encuentra main.go, ejecut
 
 `./RabbitGetter.exe QueueName NumberMessages`
 
+Si no se tiene permisos, se puede ejecutar desde la carpeta raíz del proyecto.
+
+`go run main.go QueueName NumberMessages`
+
 
 *Mac*
 
