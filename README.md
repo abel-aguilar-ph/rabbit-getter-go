@@ -5,6 +5,8 @@ Aparte, se agruparán los IDs por tipos de x-exception-message, para así saber 
 
 En ningún caso este programa provocará cambios en la cola, simplemente leerá los N primeros mensajes de la cola y hará la lógica de extracción y transformación.
 
+No funciona con todas las colas.
+
 ¡¡Cualquier mejora o idea para ampliar el código será bienvenida!!
 
 
