@@ -5,8 +5,9 @@ Aparte, se agruparán los IDs por tipos de x-exception-message, para así saber 
 
 En ningún caso este programa provocará cambios en la cola, simplemente leerá los N primeros mensajes de la cola y hará la lógica de extracción y transformación.
 
-NO FUNCIONA EN TODAS LAS COLAS PORQUE HAY DISTINTOS TIPOS DE JSON.
-¡¡Cualquier AMPLICACIÓN, MEJORA o IDEA para el código será bienvenida!!
+### NO FUNCIONA EN TODAS LAS COLAS PORQUE HAY DISTINTOS TIPOS DE JSON.
+
+### ¡¡Cualquier AMPLICACIÓN, MEJORA o IDEA para el código será bienvenida!!
 
 
 ## Instalar Go
