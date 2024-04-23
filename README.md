@@ -5,6 +5,8 @@ Aparte, se agruparán los IDs por tipos de x-exception-message, para así saber 
 
 En ningún caso este programa provocará cambios en la cola, simplemente leerá los N primeros mensajes de la cola y hará la lógica de extracción y transformación.
 
+Se puede usar para los tres entornos (pro1,pro2,k8s)
+
 ### NO FUNCIONA EN TODAS LAS COLAS PORQUE HAY DISTINTOS TIPOS DE JSON.
 
 ### ¡¡Cualquier AMPLICACIÓN, MEJORA o IDEA para el código será bienvenida!!
@@ -27,10 +29,21 @@ Cerrar terminal, volver a abrirlo y confirmar que funciona:
 
 Adicionalmente debemos de añadir las siguientes variables de entorno de forma no temporal para la configuración: 
 
-    RABBITMQ_PRO_URL="url"
-    RABBITMQ_PRO_VHOST="vhost"
-    RABBITMQ_PRO_PWD="contraseña"
-    RABBITMQ_PRO_USER="usuario"
+    RABBITMQ_PRO1_URL="url"
+    RABBITMQ_PRO1_VHOST="vhost"
+    RABBITMQ_PRO1_PWD="contraseña"
+    RABBITMQ_PRO1_USER="usuario"
+    
+    RABBITMQ_PRO2_URL="url"
+    RABBITMQ_PRO2_VHOST="vhost"
+    RABBITMQ_PRO2_PWD="contraseña"
+    RABBITMQ_PRO2_USER="usuario"
+
+    RABBITMQ_K8S_URL="url"
+    RABBITMQ_K8S_VHOST="vhost"
+    RABBITMQ_K8S_PWD="contraseña"
+    RABBITMQ_K8S_USER="usuario"
+    
 
 
 ## Como usarlo
@@ -40,14 +53,14 @@ Después de clonar o descargar el ZIP, tenemos que compilar y crear el ejecutabl
 
 Si no se tiene permisos, se puede ejecutar desde la carpeta raíz del proyecto, sin necesidad de hacer el ejecutable.
 
-`go run main.go QueueName NumberMessages`
+`go run main.go (pro1|pro2|k8s) QueueName NumberMessages`
 
 
 Desde el PowerShell, estando en el directorio donde se encuentra main.go, ejecutamos lo siguiente.
 
 `$env:GOOS="windows"; $env:GOARCH="amd64"; go build -o RabbitGetter.exe`
 
-`./RabbitGetter.exe QueueName NumberMessages`
+`./RabbitGetter.exe (pro1|pro2|k8s) QueueName NumberMessages`
 
 
 
