@@ -15,8 +15,6 @@ func main() {
 	} else if os.Args[1] != "pro1" && os.Args[1] != "pro2" && os.Args[1] != "k8s" {
 		log.Fatalln("Usage: ./RabbitGetter Environment(pro1|pro2|k8s) NameOfTheQueue NumberOfMessages")
 	}
-	var basicAuth rabbit.RabbitBasicAuth
-	var rabbitConfig rabbit.RabbitConfigure
 
 	environment := os.Args[1]
 	queueName := os.Args[2]
@@ -29,27 +27,33 @@ func main() {
 	fmt.Println()
 
 	if environment == "pro1" {
-		basicAuth.APIUser = os.Getenv("RABBITMQ_PRO1_USER")
-		basicAuth.APIPwd = os.Getenv("RABBITMQ_PRO1_PWD")
+		var rabbitConfig rabbit.RabbitConfigure
+
+		rabbitConfig.APIUser = os.Getenv("RABBITMQ_PRO1_USER")
+		rabbitConfig.APIPwd = os.Getenv("RABBITMQ_PRO1_PWD")
 		rabbitConfig.APIUrl = os.Getenv("RABBITMQ_PRO1_URL")
 		rabbitConfig.APIVhost = os.Getenv("RABBITMQ_PRO1_VHOST")
 
-		rabbit.GetMessagesFromQueue(queueName, numberOfMessages, basicAuth, rabbitConfig)
+		rabbit.GetMessagesFromQueue(queueName, numberOfMessages, &rabbitConfig)
 
 	} else if environment == "pro2" {
-		basicAuth.APIUser = os.Getenv("RABBITMQ_PRO2_USER")
-		basicAuth.APIPwd = os.Getenv("RABBITMQ_PRO2_PWD")
+		var rabbitConfig rabbit.RabbitConfigure
+
+		rabbitConfig.APIUser = os.Getenv("RABBITMQ_PRO2_USER")
+		rabbitConfig.APIPwd = os.Getenv("RABBITMQ_PRO2_PWD")
 		rabbitConfig.APIUrl = os.Getenv("RABBITMQ_PRO2_URL")
 		rabbitConfig.APIVhost = os.Getenv("RABBITMQ_PRO2_VHOST")
 
-		rabbit.GetMessagesFromQueue(queueName, numberOfMessages, basicAuth, rabbitConfig)
+		rabbit.GetMessagesFromQueue(queueName, numberOfMessages, &rabbitConfig)
 	} else if environment == "k8s" {
-		basicAuth.APIUser = os.Getenv("RABBITMQ_K8S_USER")
-		basicAuth.APIPwd = os.Getenv("RABBITMQ_K8S_PWD")
+		var rabbitConfig rabbit.RabbitConfigure
+
+		rabbitConfig.APIUser = os.Getenv("RABBITMQ_K8S_USER")
+		rabbitConfig.APIPwd = os.Getenv("RABBITMQ_K8S_PWD")
 		rabbitConfig.APIUrl = os.Getenv("RABBITMQ_K8S_URL")
 		rabbitConfig.APIVhost = os.Getenv("RABBITMQ_K8S_VHOST")
 
-		rabbit.GetMessagesFromQueue(queueName, numberOfMessages, basicAuth, rabbitConfig)
+		rabbit.GetMessagesFromQueue(queueName, numberOfMessages, &rabbitConfig)
 	}
 	fmt.Println()
 }

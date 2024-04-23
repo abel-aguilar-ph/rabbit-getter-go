@@ -11,7 +11,7 @@ import (
 
 // POST /api/queues/vhost/name/get
 
-func GetMessagesFromQueue(queueName string, numberOfMessages int, basicAuth RabbitBasicAuth, rabbitConfig RabbitConfigure) {
+func GetMessagesFromQueue(queueName string, numberOfMessages int, rabbitConfig *RabbitConfigure) {
 
 	urlFinal := fmt.Sprintf("%s/api/queues/%s/%s/get", rabbitConfig.APIUrl, rabbitConfig.APIVhost, queueName)
 	//fmt.Println("Calling to -> ",urlFinal)
@@ -35,11 +35,11 @@ func GetMessagesFromQueue(queueName string, numberOfMessages int, basicAuth Rabb
 	client := &http.Client{}
 	request.Header.Add("Content-Type", "application/json")
 
-	request.SetBasicAuth(basicAuth.APIUser, basicAuth.APIPwd)
+	request.SetBasicAuth(rabbitConfig.APIUser, rabbitConfig.APIPwd)
 
 	resp, err := client.Do(request)
 	if err != nil {
-		log.Fatalf("Error al realizar la solicitud: %v", err)
+		log.Fatalf("Error al realizar la solicitud:  %s. %v", rabbitConfig.APIVhost, err)
 	}
 	defer resp.Body.Close()
 

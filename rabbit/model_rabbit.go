@@ -1,13 +1,10 @@
 package rabbit
 
-type RabbitBasicAuth struct {
-	APIUser string
-	APIPwd  string
-}
-
 type RabbitConfigure struct {
 	APIUrl   string //"Rabbit instance API URL"
 	APIVhost string //"Rabbit instance VHOST"
+	APIUser  string
+	APIPwd   string
 }
 
 type GetMessagesBodyRequest struct {
