@@ -7,35 +7,11 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os"
 )
 
-type RabbitBasicAuth struct {
-	APIUser string
-	APIPwd  string
-}
-
-type RabbitConfigure struct {
-	APIUrl   string //"Rabbit instance API URL"
-	APIVhost string //"Rabbit instance VHOST"
-}
-
 // POST /api/queues/vhost/name/get
-type GetMessagesBodyRequest struct {
-	Count    int    `json:"count"`
-	ACKMode  string `json:"ackmode"`
-	Encoding string `json:"encoding"`
-	//Truncate int    `json:"truncate"` //Opcional
-}
 
-func GetMessagesFromQueue(queueName string, numberOfMessages int) {
-	var basicAuth RabbitBasicAuth
-	basicAuth.APIUser = os.Getenv("RABBITMQ_PRO_USER")
-	basicAuth.APIPwd = os.Getenv("RABBITMQ_PRO_PWD")
-
-	var rabbitConfig RabbitConfigure
-	rabbitConfig.APIUrl = os.Getenv("RABBITMQ_PRO_URL")
-	rabbitConfig.APIVhost = os.Getenv("RABBITMQ_PRO_VHOST")
+func GetMessagesFromQueue(queueName string, numberOfMessages int, basicAuth RabbitBasicAuth, rabbitConfig RabbitConfigure) {
 
 	urlFinal := fmt.Sprintf("%s/api/queues/%s/%s/get", rabbitConfig.APIUrl, rabbitConfig.APIVhost, queueName)
 	//fmt.Println("Calling to -> ",urlFinal)

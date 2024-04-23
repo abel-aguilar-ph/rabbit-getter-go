@@ -8,11 +8,11 @@ import (
 
 type Message struct {
 	Properties Properties `json:"properties"`
-	Payload string `json:"payload"` //JSON stringificado 
+	Payload    string     `json:"payload"` //JSON stringificado
 }
 
 type Properties struct {
-	Headers struct{
+	Headers struct {
 		ExceptionMessage string `json:"x-exception-message"`
 	} `json:"headers"`
 }
@@ -35,7 +35,7 @@ func ExtractEntireMessages(messagesRaw string) ([]Message, error) {
 func ExtractExceptionMessage(messages []Message) ([]string, error) {
 	var exceptionMsgs []string
 	for _, msg := range messages {
-	
+
 		if msg.Properties.Headers.ExceptionMessage != "" {
 			exceptionMsgs = append(exceptionMsgs, msg.Properties.Headers.ExceptionMessage)
 		}
@@ -50,29 +50,30 @@ func ExtractExceptionMessage(messages []Message) ([]string, error) {
 
 func ShowExceptionMessages(excepMsgs []string, ids []string) {
 	var res = make(map[string]([]string))
-	if(len(excepMsgs)>0){
-		for index, excepMsg := range excepMsgs { 
-			value, ok := res[excepMsg] 
-			if ok {                    
+	if len(excepMsgs) > 0 {
+		for index, excepMsg := range excepMsgs {
+			value, ok := res[excepMsg]
+			if ok {
 				res[excepMsg] = append(value, ids[index])
 			} else {
 				res[excepMsg] = []string{ids[index]}
 			}
 		}
-		fmt.Println("X-Exception-Messages:\n")
+		fmt.Println("X-Exception-Messages:")
+		fmt.Println()
 		for key, value := range res {
 			var idsSameError []string
 			fmt.Println(key)
-			fmt.Println("\tPayments with the error above (",len(value),"):")
-			idsSameError = append(idsSameError,value...)
+			fmt.Println("\tPayments with the error above (", len(value), "):")
+			idsSameError = append(idsSameError, value...)
 			/*for _, id := range value {
 				idsSameError = append(idsSameError, id)
 			}*/
-			idsKibanaError,_ := KibanaOrQuery(idsSameError)
-			fmt.Println("\t\t",idsKibanaError)
+			idsKibanaError, _ := KibanaOrQuery(idsSameError)
+			fmt.Println("\t\t", idsKibanaError)
 			fmt.Println()
 		}
-	}else{
+	} else {
 		fmt.Println()
 		fmt.Println("x-excepcion-message field not found")
 	}
@@ -95,7 +96,7 @@ func ExtractPayhubIds(messagesJson []Message) ([]string, error) {
 	}
 
 	if len(ids) == 0 {
-		return nil, fmt.Errorf("No se encontraron payhubIds")
+		return nil, fmt.Errorf("no se encontraron payhubIds")
 	}
 
 	return ids, nil
