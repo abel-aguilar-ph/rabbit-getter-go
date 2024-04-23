@@ -72,5 +72,5 @@ Desde el PowerShell, estando en el directorio donde se encuentra main.go, ejecut
 
 Ejecutar el programa
 
-`./RabbitGetter QueueName NumberMessages`
+`./RabbitGetter (pro1|pro2|k8s) proQueueName NumberMessages`
 
