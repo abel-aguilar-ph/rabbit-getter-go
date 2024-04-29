@@ -54,7 +54,7 @@ func GetMessagesFromQueue(queueName string, numberOfMessages int, rabbitConfig *
 
 	messagesJson, _ := ExtractEntireMessages(messagesRaw)
 
-	extractedIds, _ := ExtractPayhubIds(messagesJson)
+	extractedIds, _ := ExtractPayhubIds(messagesJson, queueName)
 	extractedExceptionMsgs, _ := ExtractExceptionMessage(messagesJson)
 
 	ShowExceptionMessages(extractedExceptionMsgs, extractedIds)

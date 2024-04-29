@@ -10,6 +10,12 @@ type Message struct {
 	Properties Properties `json:"properties"`
 	Payload    string     `json:"payload"` //JSON stringificado
 }
+type MessageRefundBizum struct {
+	Payload string `json:"payload"` //JSON stringificado
+}
+type PayloadRefundBizum struct {
+	PaymentHubId string `json:"paymentHubId"`
+}
 
 type Properties struct {
 	Headers struct {
@@ -79,19 +85,34 @@ func ShowExceptionMessages(excepMsgs []string, ids []string) {
 	}
 }
 
-func ExtractPayhubIds(messagesJson []Message) ([]string, error) {
+func ExtractPayhubIds(messagesJson []Message, queueName string) ([]string, error) {
 	//fmt.Println(messagesPayload)
 	var ids []string
-	for _, msg := range messagesJson {
-		var payload Payload
-		if err := json.Unmarshal([]byte(msg.Payload), &payload); err != nil {
-			fmt.Printf("Error decodificando el Payload: %v\n", err)
-			return nil, err
+	if queueName != "refundBizum.bizum-gateway.dlq" {
+		for _, msg := range messagesJson {
+			var payload Payload
+			if err := json.Unmarshal([]byte(msg.Payload), &payload); err != nil {
+				fmt.Printf("Error decodificando el Payload: %v\n", err)
+				return nil, err
+			}
+			//fmt.Println("JSON arreglado sin espacios:", msg.Payload)
+			//fmt.Printf("Payload deserializado: %+v\n", payload)
+			if payload.ExecutionId.PaymentHubId != "" {
+				ids = append(ids, payload.ExecutionId.PaymentHubId)
+			}
 		}
-		//fmt.Println("JSON arreglado sin espacios:", msg.Payload)
-		//fmt.Printf("Payload deserializado: %+v\n", payload)
-		if payload.ExecutionId.PaymentHubId != "" {
-			ids = append(ids, payload.ExecutionId.PaymentHubId)
+	} else {
+		for _, msg := range messagesJson {
+			var payload PayloadRefundBizum
+			if err := json.Unmarshal([]byte(msg.Payload), &payload); err != nil {
+				fmt.Printf("Error decodificando el Payload: %v\n", err)
+				return nil, err
+			}
+			//fmt.Println("JSON arreglado sin espacios:", msg.Payload)
+			//fmt.Printf("Payload deserializado: %+v\n", payload)
+			if payload.PaymentHubId != "" {
+				ids = append(ids, payload.PaymentHubId)
+			}
 		}
 	}
 
