@@ -5,11 +5,13 @@ Aparte, se agruparán los IDs por tipos de x-exception-message, para así saber 
 
 En ningún caso este programa provocará cambios en la cola, simplemente leerá los N primeros mensajes de la cola y hará la lógica de extracción y transformación.
 
+Se ha añadido función para extraer phids de refundBizum
+
 Se puede usar para los tres entornos (pro1,pro2,k8s)
 
-### NO FUNCIONA EN TODAS LAS COLAS PORQUE HAY DISTINTOS TIPOS DE JSON.
+### No funciona en todas las colas porque hay distintos tipos de Json.
 
-### ¡¡Cualquier AMPLICACIÓN, MEJORA o IDEA para el código será bienvenida!!
+### ¡¡Cualquier ampliación, mejora o idea para el código es bienvenida!!
 
 
 ## Instalar Go
@@ -72,5 +74,5 @@ Desde el PowerShell, estando en el directorio donde se encuentra main.go, ejecut
 
 Ejecutar el programa
 
-`./RabbitGetter (pro1|pro2|k8s) proQueueName NumberMessages`
+`./RabbitGetter (pro1|pro2|k8s) QueueName NumberMessages`
 
