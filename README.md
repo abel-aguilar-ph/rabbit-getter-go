@@ -15,7 +15,7 @@ Se puede usar para los tres entornos (pro1,pro2,k8s)
 
 
 ## Instalar Go
-Versión recomendable >=1.20
+Versión recomendable >= 1.20
 
 Para instalar en MAC se debe añadir la variable de entorno del ejecutable Go:
 
