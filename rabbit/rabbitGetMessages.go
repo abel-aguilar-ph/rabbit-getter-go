@@ -11,7 +11,7 @@ import (
 
 // POST /api/queues/vhost/name/get
 
-func GetMessagesFromQueue(queueName string, numberOfMessages int, rabbitConfig *RabbitConfigure) {
+func GetMessagesFromQueue(queueName string, numberOfMessages int, rabbitConfig *RabbitConfigure) (messagesRaw string) {
 
 	urlFinal := fmt.Sprintf("%s/api/queues/%s/%s/get", rabbitConfig.APIUrl, rabbitConfig.APIVhost, queueName)
 	//fmt.Println("Calling to -> ",urlFinal)
@@ -49,21 +49,26 @@ func GetMessagesFromQueue(queueName string, numberOfMessages int, rabbitConfig *
 	}
 
 	//fmt.Println(messageBytes)
-	messagesRaw := string(messageBytes)
-	//fmt.Println(string(messages))
+	messagesRaw = string(messageBytes)
+	return messagesRaw
+}
 
-	messagesJson, _ := ExtractEntireMessages(messagesRaw)
+func PrintFullMessages(messagesRaw string, queueName string) {
+	messagesJson, _ := ExtractEvidencesFullMessages(messagesRaw)
+	for _, msg := range messagesJson {
+		fmt.Println(msg)
+	}
+}
 
+func PrintIDsKibanaQueryWithErrors(messagesRaw string, queueName string) {
+	messagesJson, _ := ExtractParcialMessages(messagesRaw)
 	extractedIds, _ := ExtractPayhubIds(messagesJson, queueName)
 	extractedExceptionMsgs, _ := ExtractExceptionMessage(messagesJson)
-
 	ShowExceptionMessages(extractedExceptionMsgs, extractedIds)
+}
 
-	queryRes, _ := KibanaOrQuery(extractedIds)
-
-	fmt.Println()
-	fmt.Println("Kibana Query OR:")
-	fmt.Print(queryRes)
-	fmt.Println()
-
+func PrintIDsKibanaQuery(messagesRaw string, queueName string) {
+	messagesJson, _ := ExtractParcialMessages(messagesRaw)
+	extractedIds, _ := ExtractPayhubIds(messagesJson, queueName)
+	ShowKibanaOrQuery(extractedIds)
 }

@@ -6,6 +6,15 @@ import (
 	"strings"
 )
 
+/*
+type FullMessage struct {
+	Properties struct {
+		Headers string `json:"headers"`
+	} `json:"properties"`
+	Payload string `json:"payload"` //JSON stringificado
+}
+*/
+
 type Message struct {
 	Properties Properties `json:"properties"`
 	Payload    string     `json:"payload"` //JSON stringificado
@@ -17,6 +26,7 @@ type PayloadRefundBizum struct {
 	PaymentHubId string `json:"paymentHubId"`
 }
 
+// AÑADIR CABECERAS QUE SON EXTRAS de RABBIT
 type Properties struct {
 	Headers struct {
 		ExceptionMessage string `json:"x-exception-message"`
@@ -29,7 +39,17 @@ type Payload struct {
 	} `json:"executionId"`
 }
 
-func ExtractEntireMessages(messagesRaw string) ([]Message, error) {
+func ExtractEvidencesFullMessages(messagesRaw string) ([]FullMessage, error) {
+	var fullMessages []FullMessage
+	if err := json.Unmarshal([]byte(messagesRaw), &fullMessages); err != nil {
+		fmt.Printf("Error decodificando el JSON principal: %v\n", err)
+		return nil, err
+	}
+
+	return fullMessages, nil
+}
+
+func ExtractParcialMessages(messagesRaw string) ([]Message, error) {
 	var messages []Message
 	if err := json.Unmarshal([]byte(messagesRaw), &messages); err != nil {
 		fmt.Printf("Error decodificando el JSON principal: %v\n", err)
@@ -132,4 +152,10 @@ func KibanaOrQuery(ids []string) (string, error) {
 
 	query := strings.Join(formattedIds, " OR ")
 	return query, nil
+}
+
+func ShowKibanaOrQuery(ids []string) {
+	queryKibana, _ := KibanaOrQuery(ids)
+	fmt.Println(queryKibana)
+
 }
